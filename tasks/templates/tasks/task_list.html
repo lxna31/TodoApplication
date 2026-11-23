@@ -1,0 +1,32 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+
+<h2>My Tasks</h2>
+
+<a href="{% url 'task_create' %}">Add New Task</a>
+
+{% if tasks %}
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+
+                {% if task.completed %}
+                    - Completed
+                {% else %}
+                    - Pending
+                {% endif %}
+
+                [<a href="{% url 'task_update' task.pk %}">Edit</a>]
+                [<a href="{% url 'task_delete' task.pk %}">Delete</a>]
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks have been added yet. <a href="{% url 'task_create' %}">Add your first task</a>.</p>
+{% endif %}
+
+{% endblock %}
